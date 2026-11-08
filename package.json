@@ -1,0 +1,21 @@
+{
+  "name": "replicate-mcp",
+  "version": "0.2.0",
+  "description": "Inspect the chosen model schema, approve prediction creation, then use the returned prediction ID to read status. Do not infer model success from the request transport result.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "replicate-mcp": "server.mjs"
+  },
+  "scripts": {
+    "start": "node example.mjs",
+    "server": "node server.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.4.0"
+  }
+}
