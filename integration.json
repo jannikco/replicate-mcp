@@ -2,320 +2,59 @@
   "schemaVersion": 1,
   "id": "replicate-mcp",
   "kind": "provider-connector",
-  "artifactType": "connector",
-  "qualityVersion": 2,
+  "product": "pipmcp",
   "title": "Replicate MCP server",
-  "description": "Inspect the chosen model schema, approve prediction creation, then use the returned prediction ID to read status. Do not infer model success from the request transport result.",
+  "description": "Use Replicate with AI agents through one PipMCP API key, actual hosted schemas and governed execution.",
   "status": "ready",
   "verification": "mock-only",
   "releaseEligible": true,
+  "operationIds": [],
   "maintainer": "jannikco",
   "license": "MIT",
-  "product": "pipmcp",
-  "appSlug": "replicate",
-  "appName": "Replicate",
-  "operationIds": [
-    "get_model",
-    "create_prediction",
-    "get_prediction"
-  ],
-  "sourceRevision": "499493bf3475d2d15a3545fa644dc47f1581ce56ae090d32d2a3602b2976ad2b",
+  "attributionSlug": "github-replicate-mcp",
+  "sourceRevision": "0d0895da8f2f56263cf5dad9f30b7f3adea59a8796997d68f682c7fdca9c604e",
+  "qualityVersion": 2,
+  "artifactType": "connector",
   "evidence": [
-    "Actual tools/call and direct-provider request contract tests"
+    "Gateway HTTP transport fixtures",
+    "Generated stdio wrapper discovery/call fixtures"
   ],
   "provenance": [
     "https://api.replicate.com/openapi.json"
   ],
-  "attributionSlug": "github-replicate-mcp",
-  "connectorId": "replicate",
-  "connector": {
-    "id": "replicate",
-    "name": "Replicate",
-    "version": "0.1.0",
-    "baseUrl": "https://api.replicate.com/v1",
-    "auth": {
-      "type": "bearer",
-      "env": "REPLICATE_API_TOKEN"
-    },
-    "description": "Inspect model input metadata, submit an approved prediction and check its asynchronous status. HTTP acceptance does not mean the prediction completed.",
-    "tools": [
-      {
-        "name": "get_model",
-        "description": "Inspect model metadata and latest_version.openapi_schema before constructing input.",
-        "method": "GET",
-        "path": "/models/{model_owner}/{model_name}",
-        "readOnly": true,
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "model_owner": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 100
-            },
-            "model_name": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 100
-            }
-          },
-          "required": [
-            "model_owner",
-            "model_name"
-          ],
-          "additionalProperties": false
-        },
-        "bindings": {
-          "path": [
-            "model_owner",
-            "model_name"
-          ],
-          "query": {},
-          "body": {}
-        },
-        "sampleArguments": {
-          "model_owner": "replicate",
-          "model_name": "hello-world"
-        },
-        "provenance": [
-          "https://api.replicate.com/openapi.json"
-        ]
-      },
-      {
-        "name": "create_prediction",
-        "description": "Start a billable asynchronous prediction after explicit approval. Read status/output with get_prediction; model-specific input must match its schema.",
-        "method": "POST",
-        "path": "/predictions",
-        "readOnly": false,
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "version": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 300
-            },
-            "input": {
-              "type": "object",
-              "maxProperties": 64,
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "version",
-            "input"
-          ],
-          "additionalProperties": false
-        },
-        "bindings": {
-          "path": [],
-          "query": {},
-          "body": {
-            "version": "version",
-            "input": "input"
-          }
-        },
-        "sampleArguments": {
-          "version": "replicate/hello-world:9dcd6d78e7c6560c340d916fe32e9f24aabfa331e5cce95fe31f77fb03121426",
-          "input": {
-            "text": "Alice"
-          }
-        },
-        "provenance": [
-          "https://api.replicate.com/openapi.json"
-        ]
-      },
-      {
-        "name": "get_prediction",
-        "description": "Read prediction status, error and output metadata; starting/processing are not terminal success.",
-        "method": "GET",
-        "path": "/predictions/{prediction_id}",
-        "readOnly": true,
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "prediction_id": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 128
-            }
-          },
-          "required": [
-            "prediction_id"
-          ],
-          "additionalProperties": false
-        },
-        "bindings": {
-          "path": [
-            "prediction_id"
-          ],
-          "query": {},
-          "body": {}
-        },
-        "sampleArguments": {
-          "prediction_id": "fixture-prediction-id"
-        },
-        "provenance": [
-          "https://api.replicate.com/openapi.json"
-        ]
-      }
-    ],
-    "provenance": [
-      "https://api.replicate.com/openapi.json"
-    ],
-    "sourceEvidence": [
-      {
-        "url": "https://api.replicate.com/openapi.json",
-        "sha256": "4500bf86453ef1ab65a9e133929ce97f468cff9aa62ab7512d00fd588abb8b39",
-        "checkedAt": "2026-11-08T13:24:07.469650+00:00",
-        "method": "https-get"
-      }
-    ],
-    "verification": "mock-only",
-    "providerLiveValidation": "not-run",
-    "workflow": {
-      "name": "Approve and inspect a prediction",
-      "description": "Inspect the chosen model schema, approve prediction creation, then use the returned prediction ID to read status. Do not infer model success from the request transport result.",
-      "steps": [
-        "get_model",
-        "create_prediction",
-        "get_prediction"
-      ]
-    },
-    "repoId": "replicate-mcp",
-    "appSlug": "replicate",
-    "product": "pipmcp",
-    "artifactType": "connector",
-    "sourceRevision": "499493bf3475d2d15a3545fa644dc47f1581ce56ae090d32d2a3602b2976ad2b",
-    "capabilityEvidence": {
-      "local": {
-        "level": "Tested",
-        "operations": [
-          {
-            "name": "get_model",
-            "level": "Tested",
-            "evidenceRefs": [
-              "Provider request/stdio contract tests"
-            ],
-            "method": "contract-fixture"
-          },
-          {
-            "name": "create_prediction",
-            "level": "Tested",
-            "evidenceRefs": [
-              "Provider request/stdio contract tests"
-            ],
-            "method": "contract-fixture"
-          },
-          {
-            "name": "get_prediction",
-            "level": "Tested",
-            "evidenceRefs": [
-              "Provider request/stdio contract tests"
-            ],
-            "method": "contract-fixture"
-          }
-        ],
-        "evidenceRefs": [
-          "Provider request/stdio contract tests"
-        ],
-        "mode": "local"
-      },
-      "managed": {
-        "level": "Documented",
-        "operations": [
-          {
-            "name": "get_model",
-            "level": "Documented",
-            "evidenceRefs": [],
-            "method": "documentation"
-          },
-          {
-            "name": "create_prediction",
-            "level": "Documented",
-            "evidenceRefs": [],
-            "method": "documentation"
-          },
-          {
-            "name": "get_prediction",
-            "level": "Documented",
-            "evidenceRefs": [],
-            "method": "documentation"
-          }
-        ],
-        "evidenceRefs": [],
-        "mode": "managed"
-      }
-    },
-    "managedAvailability": {
-      "status": "import-required",
-      "integration": "openapi-to-mcp",
-      "checkedAt": "2026-11-08T13:20:45.156456+00:00"
-    }
+  "utility": {
+    "problem": "Inspect the chosen model schema, approve prediction creation, then use the returned prediction ID to read status. Do not infer model success from the request transport result.",
+    "output": "Actual hosted tool schemas and durable governed execution receipts"
   },
+  "appSlug": "replicate",
+  "appName": "Replicate",
+  "connectorId": "replicate",
+  "executionAuthority": "pipmcp-gateway",
+  "version": "1.0.0",
+  "agentReady": true,
   "capabilityEvidence": {
     "local": {
       "level": "Tested",
       "operations": [
         {
-          "name": "get_model",
+          "name": "gateway_transport",
           "level": "Tested",
+          "method": "contract-fixture",
           "evidenceRefs": [
-            "Provider request/stdio contract tests"
-          ],
-          "method": "contract-fixture"
-        },
-        {
-          "name": "create_prediction",
-          "level": "Tested",
-          "evidenceRefs": [
-            "Provider request/stdio contract tests"
-          ],
-          "method": "contract-fixture"
-        },
-        {
-          "name": "get_prediction",
-          "level": "Tested",
-          "evidenceRefs": [
-            "Provider request/stdio contract tests"
-          ],
-          "method": "contract-fixture"
+            "Generated gateway/stdio fixtures"
+          ]
         }
       ],
       "evidenceRefs": [
-        "Provider request/stdio contract tests"
+        "Generated gateway/stdio fixtures"
       ],
       "mode": "local"
     },
     "managed": {
       "level": "Documented",
-      "operations": [
-        {
-          "name": "get_model",
-          "level": "Documented",
-          "evidenceRefs": [],
-          "method": "documentation"
-        },
-        {
-          "name": "create_prediction",
-          "level": "Documented",
-          "evidenceRefs": [],
-          "method": "documentation"
-        },
-        {
-          "name": "get_prediction",
-          "level": "Documented",
-          "evidenceRefs": [],
-          "method": "documentation"
-        }
-      ],
+      "operations": [],
       "evidenceRefs": [],
       "mode": "managed"
     }
-  },
-  "utility": {
-    "problem": "Inspect the chosen model schema, approve prediction creation, then use the returned prediction ID to read status. Do not infer model success from the request transport result.",
-    "output": "Actual provider API results through local MCP tools"
-  },
-  "providerDocs": "https://api.replicate.com/openapi.json"
+  }
 }

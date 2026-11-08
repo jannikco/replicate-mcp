@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "product": "pipmcp",
+  "credential": "PIPMCP_API_KEY",
+  "skills": [
+    {
+      "name": "pipmcp-replicate",
+      "description": "Connect AI agents to Replicate using one PipMCP API key and actual hosted tool discovery."
+    }
+  ],
+  "files": {
+    "skills/pipmcp-replicate/SKILL.md": "5e4ea25cd56b2d6b40847ac9105242999b3a69444099b534dc1d37e6f2114034"
+  }
+}
