@@ -1,3 +1,70 @@
+# Review a model before approving a paid generation
+
+**Replicate + your AI assistant · powered by PipMCP**
+
+You want to review a model before approving a paid generation, using the account your team has actually connected.
+
+**Made for:** Creative teams testing an AI model
+
+For real use, you will need PipMCP and access to Replicate.
+
+## Ask your AI to set this up
+
+Paste this into a coding assistant that can open project files and run commands, such as Codex, Claude Code or Grok Build. You do not need to understand the code first.
+
+```text
+Help me use this project: https://github.com/jannikco/replicate-mcp
+
+I'm not a programmer. My goal is: Review a model before approving a paid generation.
+
+Read the project instructions and set it up in a new folder without overwriting my work.
+Guide me through PipMCP and its private key setup; never ask me to paste secrets into this
+chat. Run a documented sample-data demo if available, then help me get a first small
+result from my connected app. Explain the result in plain English. Ask before changing
+records, sending messages or publishing anything.
+```
+
+## Three useful things to ask for
+
+```text
+Inspect the model I choose and explain its required inputs.
+```
+
+```text
+Prepare a generation request for review. Ask before submitting it, then check its returned
+identifier until its actual outcome is known.
+```
+
+```text
+Write a short results handover from the prediction we inspected, linking the returned
+output when a link is available.
+```
+
+## Your path to a real result
+
+```mermaid
+flowchart LR
+  A["Ask your AI"] --> B["Connect PipMCP"] --> C["Review a model before<br/>approving a paid…"] --> D["Review together"]
+```
+
+1. [Open PipMCP setup](https://pipmcp.com/github/start?app=replicate&integration=replicate-mcp&utm_source=github&utm_campaign=github-replicate-mcp&utm_content=people-first-readme) and sign in or create your account.
+2. Connect the app in PipMCP with the permissions you want to grant.
+3. Create the product API key through the official setup, add it privately to your AI project's environment, and ask your AI to try a small read.
+
+**What to expect:** Connect Replicate in your PipMCP account, then use your PipMCP key for the supported actions. Review proposed changes before they are sent. Results depend on the connected account and its permissions; check the returned outcome before relying on it.
+
+Add your PipMCP key privately in your project settings. Keep keys out of chat and public repositories.
+
+## Keep going
+
+- [Find another useful integration](https://github.com/jannikco/pipmcp-connectors)
+- [Connect an API you control](https://github.com/jannikco/openapi-to-mcp)
+- [Try the GitHub project](https://github.com/jannikco/github-mcp)
+
+<details>
+<summary>Technical reference: installation commands, exact capabilities and troubleshooting</summary>
+
+<!-- people-first:technical:start -->
 # Replicate MCP server
 
 **Use Replicate from Claude Code, Codex, Grok Build and MCP clients through PipMCP. One PipMCP API key connects this package to private execution.**
@@ -61,3 +128,7 @@ Transport, package and agent fixtures are tested. Authentication/provider access
 ## Provider setup reference
 
 [Official provider documentation](https://api.replicate.com/openapi.json). Credentials are entered in PipMCP; this package does not accept or store provider secrets.
+
+<!-- people-first:technical:end -->
+
+</details>
